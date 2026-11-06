@@ -1,0 +1,27 @@
+name: Tai 12 jar thanh 1 ZIP
+on:
+  workflow_dispatch:
+jobs:
+  zip:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          mkdir libs && cd libs
+          for u in \
+            https://repo1.maven.org/maven2/org/java-websocket/Java-WebSocket/1.6.0/Java-WebSocket-1.6.0.jar \
+            https://repo1.maven.org/maven2/org/eclipse/jdt/ecj/3.42.0/ecj-3.42.0.jar \
+            https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.21/jackson-annotations-2.21.jar \
+            https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.21.0/jackson-core-2.21.0.jar \
+            https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.21.0/jackson-databind-2.21.0.jar \
+            https://repo1.maven.org/maven2/com/fasterxml/jackson/module/jackson-module-parameter-names/2.21.0/jackson-module-parameter-names-2.21.0.jar \
+            https://repo1.maven.org/maven2/net/java/dev/jna/jna/5.17.0/jna-5.17.0.jar \
+            https://repo1.maven.org/maven2/net/java/dev/jna/jna-platform/5.17.0/jna-platform-5.17.0.jar \
+            https://repo1.maven.org/maven2/com/microsoft/onnxruntime/onnxruntime/1.20.0/onnxruntime-1.20.0.jar \
+            https://repo1.maven.org/maven2/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar \
+            https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar \
+            https://jitpack.io/com/github/bonenaut7/mediatransport4j/1.0.3/mediatransport4j-1.0.3.jar
+          do curl -L -f -O "$u" || exit 1; done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: libs
+          path: libs/*.jar
